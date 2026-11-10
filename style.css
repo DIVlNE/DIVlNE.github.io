@@ -1,0 +1,1385 @@
+/* ============================================================
+   CASTLE GUARDIAN — Medieval Fantasy × Cyber Defense Portfolio
+   Complete Stylesheet
+   ============================================================ */
+
+/* ----------------------------------------------------------
+   1. CSS Custom Properties
+   ---------------------------------------------------------- */
+:root {
+  --fortress-deep: #0f172a;
+  --fortress-indigo: #1e1b4b;
+  --fortress-mid: #334155;
+  --parchment-light: #fef9c3;
+  --parchment-mid: #fef08a;
+  --parchment-gold: #fde047;
+  --crimson: #dc2626;
+  --crimson-dark: #991b1b;
+  --mana-emerald: #10b981;
+  --mana-cyan: #06b6d4;
+  --text-light: #f1f5f9;
+  --text-dark: #1e293b;
+}
+
+/* ----------------------------------------------------------
+   1. Base & Reset
+   ---------------------------------------------------------- */
+html {
+  scroll-behavior: smooth;
+}
+
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--fortress-deep);
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, var(--parchment-gold), #c9972e);
+  border-radius: 5px;
+  border: 2px solid var(--fortress-deep);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, #fef08a, var(--parchment-gold));
+}
+
+/* Firefox scrollbar */
+html {
+  scrollbar-width: thin;
+  scrollbar-color: var(--parchment-gold) var(--fortress-deep);
+}
+
+body {
+  background-color: var(--fortress-deep);
+  font-family: 'JetBrains Mono', monospace;
+  color: var(--text-light);
+  line-height: 1.6;
+  overflow-x: hidden;
+  cursor: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'><path d='M16 2 L18 12 L28 14 L18 16 L16 26 L14 16 L4 14 L14 12 Z' fill='%23fde047' stroke='%23991b1b' stroke-width='1'/></svg>") 16 16, crosshair;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+ul,
+ol {
+  list-style: none;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+/* ----------------------------------------------------------
+   2. Navigation (.castle-nav)
+   ---------------------------------------------------------- */
+.castle-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 50;
+  background: rgba(15, 23, 42, 0.92);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  padding: 0.75rem 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.castle-nav::after {
+  content: '';
+  position: absolute;
+  bottom: -12px;
+  left: 0;
+  right: 0;
+  height: 12px;
+  background: repeating-linear-gradient(
+    90deg,
+    #334155 0px,
+    #334155 20px,
+    transparent 20px,
+    transparent 30px
+  );
+  z-index: 10;
+}
+
+.nav-logo {
+  font-family: 'MedievalSharp', cursive;
+  font-size: 1.5rem;
+  color: var(--parchment-gold);
+  letter-spacing: 0.05em;
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+
+.nav-links a {
+  font-family: 'MedievalSharp', cursive;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-size: 0.95rem;
+  color: var(--text-light);
+  position: relative;
+  padding-bottom: 4px;
+  transition: color 0.3s ease;
+}
+
+.nav-links a::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: var(--parchment-gold);
+  transition: width 0.3s ease;
+}
+
+.nav-links a:hover {
+  color: var(--parchment-gold);
+}
+
+.nav-links a:hover::after {
+  width: 100%;
+}
+
+.nav-links a.active {
+  color: var(--parchment-gold);
+}
+
+.nav-links a.active::after {
+  width: 100%;
+}
+
+/* Hamburger button */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+}
+
+.hamburger span {
+  display: block;
+  width: 26px;
+  height: 3px;
+  background: var(--parchment-gold);
+  border-radius: 2px;
+  transition: all 0.3s ease;
+}
+
+/* Threat level widget in nav */
+.threat-level-widget {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: 'Press Start 2P', cursive;
+  font-size: 8px;
+  color: var(--parchment-gold);
+  background: rgba(30, 27, 75, 0.6);
+  border: 1px solid rgba(253, 224, 71, 0.25);
+  border-radius: 4px;
+  padding: 6px 10px;
+}
+
+.threat-level-widget .dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--mana-emerald);
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.6; transform: scale(1.3); }
+}
+
+/* ----------------------------------------------------------
+   3. Hero Section (#hero)
+   ---------------------------------------------------------- */
+#hero {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 6rem 2rem 4rem;
+  position: relative;
+}
+
+.hero-headline {
+  font-family: 'MedievalSharp', cursive;
+  font-size: clamp(2.5rem, 6vw, 5rem);
+  background: linear-gradient(135deg, #fef08a, #fde047, #f59e0b);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  line-height: 1.15;
+  margin-bottom: 1rem;
+}
+
+.hero-subtitle {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: clamp(0.85rem, 1.5vw, 1.15rem);
+  color: rgba(241, 245, 249, 0.7);
+  max-width: 620px;
+  margin: 0 auto 2rem;
+}
+
+.hero-cta {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 1.5rem;
+}
+
+/* ----------------------------------------------------------
+   4. Animated Knight / Shield (.shield-container)
+   ---------------------------------------------------------- */
+.shield-container {
+  position: relative;
+  width: 300px;
+  height: 350px;
+  margin: 2rem auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.shield-container svg {
+  width: 100%;
+  height: 100%;
+  filter: drop-shadow(0 0 20px rgba(253, 224, 71, 0.15));
+  transition: filter 0.4s ease;
+}
+
+.shield-container:hover svg {
+  filter: drop-shadow(0 0 40px rgba(253, 224, 71, 0.35))
+         drop-shadow(0 0 80px rgba(253, 224, 71, 0.15));
+}
+
+.spark {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--parchment-gold);
+  pointer-events: none;
+  animation: sparkAnim 0.6s ease-out forwards;
+}
+
+@keyframes sparkAnim {
+  0% {
+    transform: scale(0);
+    opacity: 1;
+    box-shadow: 0 0 6px var(--parchment-gold), 0 0 12px var(--parchment-gold);
+  }
+  50% {
+    transform: scale(1.5);
+    opacity: 0.8;
+    box-shadow: 0 0 12px var(--parchment-gold), 0 0 24px var(--parchment-gold);
+  }
+  100% {
+    transform: scale(0.5);
+    opacity: 0;
+    box-shadow: 0 0 0 transparent;
+  }
+}
+
+/* ----------------------------------------------------------
+   5. CTA Buttons (.btn-primary, .btn-secondary)
+   ---------------------------------------------------------- */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--parchment-gold);
+  color: var(--text-dark);
+  font-family: 'MedievalSharp', cursive;
+  font-size: 1.1rem;
+  padding: 0.75rem 2rem;
+  border: 2px solid var(--crimson-dark);
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 700;
+  box-shadow: 0 4px 16px rgba(253, 224, 71, 0.25),
+              0 2px 4px rgba(0, 0, 0, 0.3);
+  transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+  background: #fef08a;
+  transform: scale(1.05);
+  box-shadow: 0 6px 24px rgba(253, 224, 71, 0.4),
+              0 4px 8px rgba(0, 0, 0, 0.4);
+}
+
+.btn-primary:active {
+  transform: scale(0.98);
+}
+
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: transparent;
+  color: var(--parchment-gold);
+  font-family: 'MedievalSharp', cursive;
+  font-size: 1.1rem;
+  padding: 0.75rem 2rem;
+  border: 2px solid var(--parchment-gold);
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 700;
+  transition: all 0.3s ease;
+}
+
+.btn-secondary:hover {
+  background: var(--parchment-gold);
+  color: var(--text-dark);
+}
+
+.btn-secondary:active {
+  transform: scale(0.98);
+}
+
+/* ----------------------------------------------------------
+   6. Parchment Scroll Cards (.scroll-card)
+   ---------------------------------------------------------- */
+.scroll-card {
+  background: linear-gradient(135deg, #fef9c3, #fef08a, #fde68a);
+  border: 3px solid rgba(180, 130, 60, 0.5);
+  border-radius: 4px;
+  box-shadow: inset 0 2px 8px rgba(180, 130, 60, 0.25),
+              0 4px 20px rgba(0, 0, 0, 0.3);
+  color: var(--text-dark);
+  padding: 2.5rem 2rem;
+  position: relative;
+  margin-top: 16px;
+  margin-bottom: 16px;
+}
+
+.scroll-card::before {
+  content: '';
+  position: absolute;
+  top: -8px;
+  left: 10%;
+  right: 10%;
+  height: 16px;
+  background: linear-gradient(to bottom, #d4a853, #c9972e);
+  border-radius: 50%;
+  z-index: 1;
+}
+
+.scroll-card::after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 10%;
+  right: 10%;
+  height: 16px;
+  background: linear-gradient(to top, #d4a853, #c9972e);
+  border-radius: 50%;
+  z-index: 1;
+}
+
+/* ----------------------------------------------------------
+   7. Guild Badges / Certification Shields (.cert-badge)
+   ---------------------------------------------------------- */
+.cert-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  background: linear-gradient(135deg, #1e1b4b, #312e81);
+  border: 2px solid var(--parchment-gold);
+  font-family: 'Press Start 2P', cursive;
+  font-size: 10px;
+  color: var(--parchment-gold);
+  clip-path: polygon(0 0, 100% 0, 100% 75%, 50% 100%, 0 75%);
+  padding: 1rem 1.25rem 2rem;
+  text-align: center;
+  transition: box-shadow 0.3s ease, filter 0.3s ease;
+  position: relative;
+}
+
+.cert-badge:hover {
+  filter: drop-shadow(0 0 12px rgba(253, 224, 71, 0.5));
+}
+
+/* ----------------------------------------------------------
+   8. Skill Category Cards (.skill-category)
+   ---------------------------------------------------------- */
+.skill-category {
+  background: rgba(30, 27, 75, 0.6);
+  border: 2px solid rgba(253, 224, 71, 0.2);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-radius: 12px;
+  padding: 1.75rem;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.skill-category:hover {
+  border-color: rgba(253, 224, 71, 0.45);
+  box-shadow: 0 4px 24px rgba(253, 224, 71, 0.1);
+}
+
+.skill-category-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1.25rem;
+}
+
+.skill-category-header .icon {
+  font-size: 1.75rem;
+}
+
+.skill-category-header h3 {
+  font-family: 'MedievalSharp', cursive;
+  font-size: 1.3rem;
+  color: var(--parchment-gold);
+}
+
+/* ----------------------------------------------------------
+   9. Skill Bars / Flask Gauges (.skill-bar)
+   ---------------------------------------------------------- */
+.skill-bar-group {
+  margin-bottom: 1rem;
+}
+
+.skill-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.75rem;
+  color: var(--text-light);
+  margin-bottom: 0.35rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.skill-label span {
+  font-size: 0.7rem;
+  color: rgba(241, 245, 249, 0.5);
+}
+
+.skill-bar {
+  height: 24px;
+  background: rgba(15, 23, 42, 0.8);
+  border-radius: 12px;
+  border: 2px solid rgba(253, 224, 71, 0.15);
+  overflow: hidden;
+  position: relative;
+}
+
+.skill-fill {
+  height: 100%;
+  border-radius: 12px;
+  transition: width 1.5s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.skill-fill.offensive {
+  background: linear-gradient(90deg, #dc2626, #ef4444);
+}
+
+.skill-fill.defensive {
+  background: linear-gradient(90deg, #10b981, #34d399);
+}
+
+.skill-fill.alchemy {
+  background: linear-gradient(90deg, #06b6d4, #22d3ee);
+}
+
+/* Shimmer overlay */
+.skill-fill::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.2) 50%,
+    transparent 100%
+  );
+  animation: shimmer 2.5s ease-in-out infinite;
+}
+
+@keyframes shimmer {
+  0% { left: -100%; }
+  100% { left: 100%; }
+}
+
+/* ----------------------------------------------------------
+   10. Project Cards (.project-card)
+   ---------------------------------------------------------- */
+.project-card {
+  background: rgba(30, 27, 75, 0.5);
+  border: 2px solid rgba(253, 224, 71, 0.15);
+  border-radius: 12px;
+  padding: 1.75rem;
+  transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.project-card:hover {
+  border-color: var(--parchment-gold);
+  transform: translateY(-4px);
+  box-shadow: 0 8px 32px rgba(253, 224, 71, 0.15),
+              0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.project-card h3 {
+  font-family: 'MedievalSharp', cursive;
+  font-size: 1.25rem;
+  color: var(--parchment-gold);
+  margin-bottom: 0.75rem;
+}
+
+.project-card p {
+  font-size: 0.875rem;
+  color: rgba(241, 245, 249, 0.75);
+  margin-bottom: 1rem;
+  line-height: 1.7;
+}
+
+.project-card .tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.project-card .tag {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.7rem;
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.project-card .tag.python {
+  background: rgba(16, 185, 129, 0.2);
+  color: var(--mana-emerald);
+  border: 1px solid rgba(16, 185, 129, 0.35);
+}
+
+.project-card .tag.splunk {
+  background: rgba(6, 182, 212, 0.2);
+  color: var(--mana-cyan);
+  border: 1px solid rgba(6, 182, 212, 0.35);
+}
+
+.project-card .tag.mitre {
+  background: rgba(220, 38, 38, 0.2);
+  color: var(--crimson);
+  border: 1px solid rgba(220, 38, 38, 0.35);
+}
+
+/* ----------------------------------------------------------
+   11. CVE Bounty Scroll (.cve-scroll)
+   ---------------------------------------------------------- */
+.cve-scroll {
+  background: linear-gradient(135deg, #fef9c3, #fef08a, #fde68a);
+  border: 3px solid rgba(180, 130, 60, 0.5);
+  border-radius: 4px;
+  box-shadow: inset 0 2px 8px rgba(180, 130, 60, 0.25),
+              0 4px 20px rgba(0, 0, 0, 0.3);
+  color: var(--text-dark);
+  padding: 2.5rem 2rem;
+  position: relative;
+  margin-top: 16px;
+  margin-bottom: 16px;
+  overflow: visible;
+}
+
+.cve-scroll::before {
+  content: '';
+  position: absolute;
+  top: -8px;
+  left: 10%;
+  right: 10%;
+  height: 16px;
+  background: linear-gradient(to bottom, #d4a853, #c9972e);
+  border-radius: 50%;
+  z-index: 1;
+}
+
+.cve-scroll::after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 10%;
+  right: 10%;
+  height: 16px;
+  background: linear-gradient(to top, #d4a853, #c9972e);
+  border-radius: 50%;
+  z-index: 1;
+}
+
+/* Wax Seal */
+.wax-seal {
+  width: 80px;
+  height: 80px;
+  background: radial-gradient(circle, #dc2626, #991b1b);
+  border-radius: 50%;
+  position: absolute;
+  top: -20px;
+  right: -20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Press Start 2P', cursive;
+  font-size: 10px;
+  color: #fef9c3;
+  transform: rotate(-12deg);
+  box-shadow: inset 0 3px 8px rgba(0, 0, 0, 0.4),
+              0 4px 12px rgba(0, 0, 0, 0.5);
+  z-index: 5;
+  animation: waxPulse 2s ease-in-out infinite;
+}
+
+/* CVSS Gauge */
+.cvss-gauge {
+  height: 8px;
+  background: rgba(15, 23, 42, 0.3);
+  border-radius: 4px;
+  overflow: hidden;
+  margin-top: 0.75rem;
+}
+
+.cvss-gauge-fill {
+  height: 100%;
+  border-radius: 4px;
+  transition: width 1s ease;
+}
+
+.cvss-gauge-fill.cvss-low {
+  background: var(--mana-emerald);
+}
+
+.cvss-gauge-fill.cvss-medium {
+  background: var(--parchment-gold);
+}
+
+.cvss-gauge-fill.cvss-high {
+  background: #f97316;
+}
+
+.cvss-gauge-fill.cvss-critical {
+  background: var(--crimson);
+}
+
+/* ----------------------------------------------------------
+   12. Wax Seal Pulse Animation
+   ---------------------------------------------------------- */
+@keyframes waxPulse {
+  0%, 100% {
+    box-shadow: inset 0 3px 8px rgba(0, 0, 0, 0.4),
+                0 0 10px rgba(220, 38, 38, 0.4),
+                0 0 20px rgba(220, 38, 38, 0.2);
+  }
+  50% {
+    box-shadow: inset 0 3px 8px rgba(0, 0, 0, 0.4),
+                0 0 20px rgba(220, 38, 38, 0.6),
+                0 0 40px rgba(220, 38, 38, 0.3);
+  }
+}
+
+/* ----------------------------------------------------------
+   13. Contact Form (.raven-form)
+   ---------------------------------------------------------- */
+.raven-form {
+  background: linear-gradient(135deg, #fef9c3, #fef08a, #fde68a);
+  border: 3px solid rgba(180, 130, 60, 0.5);
+  border-radius: 4px;
+  box-shadow: inset 0 2px 8px rgba(180, 130, 60, 0.25),
+              0 4px 20px rgba(0, 0, 0, 0.3);
+  padding: 2.5rem 2rem;
+  position: relative;
+  margin-top: 16px;
+  margin-bottom: 16px;
+}
+
+.raven-form::before {
+  content: '';
+  position: absolute;
+  top: -8px;
+  left: 10%;
+  right: 10%;
+  height: 16px;
+  background: linear-gradient(to bottom, #d4a853, #c9972e);
+  border-radius: 50%;
+  z-index: 1;
+}
+
+.raven-form::after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 10%;
+  right: 10%;
+  height: 16px;
+  background: linear-gradient(to top, #d4a853, #c9972e);
+  border-radius: 50%;
+  z-index: 1;
+}
+
+.raven-form label {
+  display: block;
+  font-family: 'MedievalSharp', cursive;
+  font-size: 1.05rem;
+  color: #92600a;
+  margin-bottom: 0.35rem;
+  margin-top: 1rem;
+}
+
+.raven-form label:first-of-type {
+  margin-top: 0;
+}
+
+.raven-form input,
+.raven-form textarea {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  background: var(--fortress-deep);
+  color: var(--text-light);
+  border: 2px solid var(--fortress-mid);
+  border-radius: 6px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.9rem;
+  outline: none;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.raven-form input:focus,
+.raven-form textarea:focus {
+  border-color: var(--parchment-gold);
+  box-shadow: 0 0 0 3px rgba(253, 224, 71, 0.25);
+}
+
+.raven-form textarea {
+  min-height: 140px;
+  resize: vertical;
+}
+
+.raven-form button[type="submit"] {
+  margin-top: 1.5rem;
+}
+
+/* ----------------------------------------------------------
+   14. Torch Flicker Animation
+   ---------------------------------------------------------- */
+@keyframes torchFlicker {
+  0%, 100% { opacity: 1; filter: brightness(1); }
+  25% { opacity: 0.85; filter: brightness(0.9); }
+  50% { opacity: 0.95; filter: brightness(1.1); }
+  75% { opacity: 0.88; filter: brightness(0.95); }
+}
+
+.torch-icon {
+  animation: torchFlicker 1.5s ease-in-out infinite;
+}
+
+/* ----------------------------------------------------------
+   15. Floating / Entrance Animations
+   ---------------------------------------------------------- */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+.animate-on-scroll {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.animate-on-scroll.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.float-animation {
+  animation: float 3s ease-in-out infinite;
+}
+
+/* ----------------------------------------------------------
+   16. Particle Canvas (#particle-canvas)
+   ---------------------------------------------------------- */
+#particle-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* ----------------------------------------------------------
+   17. Section Headings (.section-title)
+   ---------------------------------------------------------- */
+.section-title {
+  font-family: 'MedievalSharp', cursive;
+  font-size: clamp(2rem, 4vw, 2.75rem);
+  background: linear-gradient(135deg, #fef08a, #fde047, #f59e0b);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-align: center;
+  position: relative;
+  margin-bottom: 2.5rem;
+}
+
+.section-title::after {
+  content: '◆';
+  display: block;
+  text-align: center;
+  color: #fde047;
+  font-size: 0.75rem;
+  margin-top: 8px;
+  letter-spacing: 1rem;
+  /* reset gradient text for the pseudo */
+  -webkit-text-fill-color: #fde047;
+}
+
+/* ----------------------------------------------------------
+   18. Threat Level Widget (.threat-gauge)
+   ---------------------------------------------------------- */
+.threat-gauge {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-family: 'Press Start 2P', cursive;
+  font-size: 8px;
+  flex-wrap: wrap;
+}
+
+.threat-gauge .level {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 4px 8px;
+  border-radius: 4px;
+  opacity: 0.45;
+  transition: all 0.3s ease;
+}
+
+.threat-gauge .level .indicator {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+.threat-gauge .level.active {
+  opacity: 1;
+  transform: scale(1.1);
+}
+
+.threat-low {
+  color: var(--mana-emerald);
+}
+
+.threat-low .indicator {
+  background: var(--mana-emerald);
+}
+
+.threat-low.active {
+  text-shadow: 0 0 8px rgba(16, 185, 129, 0.6);
+}
+
+.threat-low.active .indicator {
+  box-shadow: 0 0 8px var(--mana-emerald);
+  animation: pulse 2s ease-in-out infinite;
+}
+
+.threat-guarded {
+  color: var(--mana-cyan);
+}
+
+.threat-guarded .indicator {
+  background: var(--mana-cyan);
+}
+
+.threat-guarded.active {
+  text-shadow: 0 0 8px rgba(6, 182, 212, 0.6);
+}
+
+.threat-guarded.active .indicator {
+  box-shadow: 0 0 8px var(--mana-cyan);
+  animation: pulse 2s ease-in-out infinite;
+}
+
+.threat-elevated {
+  color: var(--parchment-gold);
+}
+
+.threat-elevated .indicator {
+  background: var(--parchment-gold);
+}
+
+.threat-elevated.active {
+  text-shadow: 0 0 8px rgba(253, 224, 71, 0.6);
+}
+
+.threat-elevated.active .indicator {
+  box-shadow: 0 0 8px var(--parchment-gold);
+  animation: pulse 2s ease-in-out infinite;
+}
+
+.threat-high {
+  color: #f97316;
+}
+
+.threat-high .indicator {
+  background: #f97316;
+}
+
+.threat-high.active {
+  text-shadow: 0 0 8px rgba(249, 115, 22, 0.6);
+}
+
+.threat-high.active .indicator {
+  box-shadow: 0 0 8px #f97316;
+  animation: pulse 2s ease-in-out infinite;
+}
+
+.threat-severe {
+  color: var(--crimson);
+}
+
+.threat-severe .indicator {
+  background: var(--crimson);
+}
+
+.threat-severe.active {
+  text-shadow: 0 0 8px rgba(220, 38, 38, 0.6);
+}
+
+.threat-severe.active .indicator {
+  box-shadow: 0 0 8px var(--crimson);
+  animation: pulse 2s ease-in-out infinite;
+}
+
+/* ----------------------------------------------------------
+   19. Social Links (.social-links a)
+   ---------------------------------------------------------- */
+.social-links {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.social-links a {
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  border: 2px solid rgba(253, 224, 71, 0.4);
+  color: var(--parchment-gold);
+  font-size: 1.15rem;
+  transition: all 0.3s ease;
+}
+
+.social-links a:hover {
+  background: var(--parchment-gold);
+  color: var(--text-dark);
+  transform: scale(1.1);
+  border-color: var(--parchment-gold);
+}
+
+/* ----------------------------------------------------------
+   20. Footer (.castle-footer)
+   ---------------------------------------------------------- */
+.castle-footer {
+  background: var(--fortress-indigo);
+  padding: 3rem 2rem 2rem;
+  position: relative;
+  text-align: center;
+}
+
+.castle-footer::before {
+  content: '';
+  position: absolute;
+  top: -12px;
+  left: 0;
+  right: 0;
+  height: 12px;
+  background: repeating-linear-gradient(
+    90deg,
+    var(--fortress-indigo) 0px,
+    var(--fortress-indigo) 20px,
+    transparent 20px,
+    transparent 30px
+  );
+  z-index: 10;
+}
+
+.castle-footer .forged-by {
+  font-family: 'MedievalSharp', cursive;
+  font-size: 1.1rem;
+  color: var(--parchment-gold);
+  margin-bottom: 0.5rem;
+}
+
+.castle-footer .footer-text {
+  font-size: 0.75rem;
+  color: rgba(241, 245, 249, 0.4);
+}
+
+/* ----------------------------------------------------------
+   21. Mobile Menu (.mobile-menu)
+   ---------------------------------------------------------- */
+.mobile-menu {
+  display: none;
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: rgba(15, 23, 42, 0.97);
+  z-index: 100;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  transform: translateX(100%);
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.mobile-menu.open {
+  display: flex;
+  transform: translateX(0);
+}
+
+.mobile-menu a {
+  font-family: 'MedievalSharp', cursive;
+  font-size: 1.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-light);
+  transition: color 0.3s ease;
+}
+
+.mobile-menu a:hover {
+  color: var(--parchment-gold);
+}
+
+.mobile-menu .close-btn {
+  position: absolute;
+  top: 1.5rem;
+  right: 1.5rem;
+  background: none;
+  border: none;
+  color: var(--parchment-gold);
+  font-size: 2rem;
+  cursor: pointer;
+}
+
+/* ----------------------------------------------------------
+   22. Responsive Media Queries
+   ---------------------------------------------------------- */
+@media (max-width: 768px) {
+  .hero-headline {
+    font-size: clamp(2rem, 5vw, 3rem);
+  }
+
+  .shield-container {
+    width: 200px;
+    height: 240px;
+  }
+
+  .skill-categories-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .projects-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .nav-links {
+    display: none;
+  }
+
+  .hamburger {
+    display: flex;
+  }
+
+  section {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  .castle-nav {
+    padding: 0.75rem 1rem;
+  }
+
+  .scroll-card,
+  .cve-scroll,
+  .raven-form {
+    padding: 2rem 1.25rem;
+  }
+
+  .cert-badge {
+    font-size: 8px;
+    padding: 0.75rem 1rem 1.75rem;
+  }
+
+  .threat-gauge {
+    font-size: 7px;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-headline {
+    font-size: 1.75rem;
+  }
+
+  .hero-subtitle {
+    font-size: 0.8rem;
+  }
+
+  .shield-container {
+    width: 160px;
+    height: 200px;
+  }
+
+  .section-title {
+    font-size: 1.5rem;
+  }
+
+  .cert-badge {
+    font-size: 7px;
+    padding: 0.6rem 0.75rem 1.5rem;
+  }
+
+  .btn-primary,
+  .btn-secondary {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .hero-cta {
+    flex-direction: column;
+    width: 100%;
+    padding: 0 1rem;
+  }
+
+  .project-card {
+    padding: 1.25rem;
+  }
+
+  .skill-category {
+    padding: 1.25rem;
+  }
+}
+
+/* ----------------------------------------------------------
+   23. Accordion / Collapsible (.accordion)
+   ---------------------------------------------------------- */
+.accordion {
+  border: 1px solid rgba(253, 224, 71, 0.15);
+  border-radius: 8px;
+  overflow: hidden;
+  margin-bottom: 0.75rem;
+}
+
+.accordion-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid rgba(253, 224, 71, 0.1);
+  background: rgba(30, 27, 75, 0.4);
+  font-family: 'MedievalSharp', cursive;
+  font-size: 1.1rem;
+  color: var(--parchment-gold);
+  transition: background 0.3s ease;
+  user-select: none;
+}
+
+.accordion-header:hover {
+  background: rgba(30, 27, 75, 0.7);
+}
+
+.accordion-header .chevron {
+  transition: transform 0.3s ease;
+  font-size: 0.8rem;
+}
+
+.accordion-content {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.5s ease;
+  background: rgba(15, 23, 42, 0.5);
+}
+
+.accordion-content.open {
+  max-height: 600px;
+}
+
+.accordion-content-inner {
+  padding: 1.25rem;
+  font-size: 0.9rem;
+  line-height: 1.7;
+  color: rgba(241, 245, 249, 0.8);
+}
+
+/* ----------------------------------------------------------
+   24. Misc Utilities
+   ---------------------------------------------------------- */
+.gold-text {
+  background: linear-gradient(135deg, #fef08a, #fde047, #f59e0b);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.glow-green {
+  text-shadow: 0 0 8px rgba(16, 185, 129, 0.6),
+               0 0 16px rgba(16, 185, 129, 0.3);
+}
+
+.glow-cyan {
+  text-shadow: 0 0 8px rgba(6, 182, 212, 0.6),
+               0 0 16px rgba(6, 182, 212, 0.3);
+}
+
+.card-hover {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card-hover:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+.text-mono {
+  font-family: 'JetBrains Mono', monospace;
+}
+
+.text-medieval {
+  font-family: 'MedievalSharp', cursive;
+}
+
+.text-pixel {
+  font-family: 'Press Start 2P', cursive;
+}
+
+/* General section spacing */
+section {
+  position: relative;
+  z-index: 1;
+  padding: 5rem 2rem;
+}
+
+/* Grid utilities */
+.skill-categories-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+}
+
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 1.5rem;
+}
+
+.certs-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  justify-content: center;
+}
+
+/* Container utility */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+/* ----------------------------------------------------------
+   25. Loading / Page Transition
+   ---------------------------------------------------------- */
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.page-loader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+  background: var(--fortress-deep);
+  transition: opacity 0.5s ease;
+}
+
+.page-loader.loaded {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.loader-shield {
+  animation: spin 2s linear infinite;
+  width: 64px;
+  height: 64px;
+  color: var(--parchment-gold);
+}
+
+.loader-shield svg {
+  width: 100%;
+  height: 100%;
+}

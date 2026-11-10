@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- EDIT: YOUR_SITE_TITLE -->
+  <title>Castle Guardian — Cybersecurity Portfolio</title>
+  <meta name="description" content="Defender of the Digital Realm — Cybersecurity Analyst & Threat Hunter. Fortifying perimeters, repelling digital sieges, and hunting zero-day threats." />
+
+  <!-- ============================================================
+       Google Fonts: MedievalSharp | Press Start 2P | JetBrains Mono
+       ============================================================ -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=MedievalSharp&family=Press+Start+2P&display=swap" rel="stylesheet" />
+
+  <!-- ============================================================
+       Tailwind CSS (CDN)
+       ============================================================ -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            fortress: { deep: '#0f172a', indigo: '#1e1b4b', mid: '#334155' },
+            parchment: { light: '#fef9c3', mid: '#fef08a', gold: '#fde047' },
+            crimson: { DEFAULT: '#dc2626', dark: '#991b1b' },
+            mana: { emerald: '#10b981', cyan: '#06b6d4' }
+          },
+          fontFamily: {
+            medieval: ['MedievalSharp', 'cursive'],
+            pixel: ['"Press Start 2P"', 'cursive'],
+            mono: ['"JetBrains Mono"', 'monospace']
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- ============================================================
+       Custom Stylesheet
+       ============================================================ -->
+  <link rel="stylesheet" href="style.css" />
+
+  <!-- Favicon (simple shield emoji fallback) -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛡️</text></svg>" />
+</head>
+<body>
+
+  <!-- ============================================================
+       PAGE LOADER
+       ============================================================ -->
+  <div class="page-loader">
+    <div class="loader-shield">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+      </svg>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       PARTICLE CANVAS (ambient interactive background)
+       ============================================================ -->
+  <canvas id="particle-canvas" aria-hidden="true"></canvas>
+
+  <!-- ============================================================
+       NAVIGATION — Castle Gates / Battlements Parapet
+       ============================================================ -->
+  <nav class="castle-nav" role="navigation" aria-label="Main navigation">
+    <!-- Logo / Brand -->
+    <a href="#hero" class="nav-logo" aria-label="Home">
+      <span class="torch-icon">🏰</span>
+      <!-- EDIT: YOUR_NAME -->
+      <span>Castle Guardian</span>
+    </a>
+
+    <!-- Desktop Nav Links -->
+    <div class="nav-links">
+      <a href="#about" class="nav-link">The Sentinel</a>
+      <a href="#skills" class="nav-link">Armory & Spells</a>
+      <a href="#projects" class="nav-link">Campaigns & CVEs</a>
+      <a href="#contact" class="nav-link">Raven Post</a>
+
+      <!-- Threat Level Widget -->
+      <div class="threat-level-widget threat-gauge" aria-live="polite">
+        <span class="threat-dot dot" style="width:8px;height:8px;border-radius:50%;display:inline-block;"></span>
+        <span>DEFCON:</span>
+        <span class="threat-level-text">LOW</span>
+      </div>
+    </div>
+
+    <!-- Hamburger (mobile) -->
+    <button class="hamburger mobile-menu-toggle" aria-label="Toggle navigation menu" aria-expanded="false">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+  </nav>
+
+  <!-- Mobile Menu Overlay -->
+  <div class="mobile-menu" role="dialog" aria-label="Mobile navigation">
+    <button class="close-btn mobile-menu-toggle" aria-label="Close menu">&times;</button>
+    <a href="#about" class="nav-link">The Sentinel</a>
+    <a href="#skills" class="nav-link">Armory & Spells</a>
+    <a href="#projects" class="nav-link">Campaigns & CVEs</a>
+    <a href="#contact" class="nav-link">Raven Post</a>
+  </div>
+
+  <!-- ============================================================
+       HERO SECTION — "The Gatekeeper"
+       ============================================================ -->
+  <section id="hero">
+    <!-- Decorative BG elements for parallax -->
+    <div class="hero-bg-element" aria-hidden="true" style="position:absolute;top:15%;left:8%;font-size:2rem;opacity:0.06;">⚔️</div>
+    <div class="hero-bg-element" aria-hidden="true" style="position:absolute;top:25%;right:12%;font-size:2.5rem;opacity:0.05;">🛡️</div>
+    <div class="hero-bg-element" aria-hidden="true" style="position:absolute;bottom:20%;left:15%;font-size:1.8rem;opacity:0.05;">🗡️</div>
+    <div class="hero-bg-element" aria-hidden="true" style="position:absolute;top:60%;right:8%;font-size:2rem;opacity:0.04;">🏹</div>
+
+    <!-- Animated Shield SVG -->
+    <div class="shield-container" aria-hidden="true">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 240" fill="none">
+        <!-- Outer shield body -->
+        <defs>
+          <linearGradient id="shieldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style="stop-color:#334155"/>
+            <stop offset="40%" style="stop-color:#1e1b4b"/>
+            <stop offset="100%" style="stop-color:#0f172a"/>
+          </linearGradient>
+          <linearGradient id="goldTrim" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style="stop-color:#fef08a"/>
+            <stop offset="50%" style="stop-color:#fde047"/>
+            <stop offset="100%" style="stop-color:#f59e0b"/>
+          </linearGradient>
+          <radialGradient id="coreGlow" cx="50%" cy="40%" r="45%">
+            <stop offset="0%" style="stop-color:#06b6d4;stop-opacity:0.6"/>
+            <stop offset="100%" style="stop-color:#06b6d4;stop-opacity:0"/>
+          </radialGradient>
+          <filter id="glow">
+            <feGaussianBlur stdDeviation="3" result="blur"/>
+            <feMerge>
+              <feMergeNode in="blur"/>
+              <feMergeNode in="SourceGraphic"/>
+            </feMerge>
+          </filter>
+        </defs>
+
+        <!-- Shield shape -->
+        <path d="M100 10 L185 50 L185 120 Q185 200 100 232 Q15 200 15 120 L15 50 Z"
+              fill="url(#shieldGrad)" stroke="url(#goldTrim)" stroke-width="4"/>
+
+        <!-- Inner border -->
+        <path d="M100 28 L170 60 L170 118 Q170 188 100 216 Q30 188 30 118 L30 60 Z"
+              fill="none" stroke="url(#goldTrim)" stroke-width="1.5" opacity="0.5"/>
+
+        <!-- Center emblem glow -->
+        <circle cx="100" cy="105" r="50" fill="url(#coreGlow)"/>
+
+        <!-- Central lock / keyhole emblem -->
+        <g filter="url(#glow)">
+          <circle cx="100" cy="95" r="18" fill="none" stroke="#06b6d4" stroke-width="2.5"/>
+          <rect x="94" y="108" width="12" height="22" rx="3" fill="none" stroke="#06b6d4" stroke-width="2.5"/>
+          <circle cx="100" cy="95" r="5" fill="#06b6d4" opacity="0.8"/>
+          <rect x="98" y="100" width="4" height="12" fill="#06b6d4" opacity="0.8"/>
+        </g>
+
+        <!-- Decorative rivets -->
+        <circle cx="100" cy="40" r="4" fill="url(#goldTrim)"/>
+        <circle cx="60" cy="60" r="3" fill="url(#goldTrim)" opacity="0.7"/>
+        <circle cx="140" cy="60" r="3" fill="url(#goldTrim)" opacity="0.7"/>
+        <circle cx="50" cy="100" r="3" fill="url(#goldTrim)" opacity="0.5"/>
+        <circle cx="150" cy="100" r="3" fill="url(#goldTrim)" opacity="0.5"/>
+        <circle cx="100" cy="195" r="4" fill="url(#goldTrim)" opacity="0.6"/>
+
+        <!-- Diagonal cross guards -->
+        <line x1="55" y1="70" x2="145" y2="140" stroke="url(#goldTrim)" stroke-width="1" opacity="0.25"/>
+        <line x1="145" y1="70" x2="55" y2="140" stroke="url(#goldTrim)" stroke-width="1" opacity="0.25"/>
+      </svg>
+    </div>
+
+    <!-- Headline -->
+    <h1 class="hero-headline">
+      Defender of the<br/>Digital Realm
+    </h1>
+
+    <!-- Subtitle with typed text -->
+    <p class="hero-subtitle">
+      <span class="typed-text"></span><br/>
+      Fortifying perimeters, repelling digital sieges, and uncovering zero-day vulnerabilities.
+    </p>
+
+    <!-- CTA Buttons -->
+    <div class="hero-cta">
+      <a href="#projects" class="btn-primary nav-link">
+        <i data-lucide="shield" style="width:18px;height:18px;"></i>
+        Inspect Armory
+      </a>
+      <a href="#contact" class="btn-secondary nav-link">
+        <i data-lucide="send" style="width:18px;height:18px;"></i>
+        Summon Courier
+      </a>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SECTION 2 — "The Sentinel's Lore" (About / Profile)
+       ============================================================ -->
+  <section id="about">
+    <div class="container">
+      <h2 class="section-title animate-on-scroll">The Sentinel's Lore</h2>
+
+      <!-- Bio Scroll Card -->
+      <div class="scroll-card animate-on-scroll" style="max-width:800px;margin:0 auto 3rem;">
+        <h3 style="font-family:'MedievalSharp',cursive;font-size:1.5rem;color:#991b1b;margin-bottom:1rem;">
+          <i data-lucide="scroll-text" style="width:22px;height:22px;display:inline;vertical-align:middle;color:#991b1b;"></i>
+          Background & Cybersecurity Profile
+        </h3>
+        <!-- EDIT: YOUR_BIO -->
+        <p style="line-height:1.85;margin-bottom:1rem;">
+          Greetings, traveler. I am a <strong>Cybersecurity Analyst & Threat Hunter</strong> forged in
+          the fires of Blue Team defense. With a steadfast devotion to safeguarding digital realms, I
+          specialize in <strong>vulnerability assessment</strong>, <strong>penetration testing</strong>,
+          <strong>SIEM operations</strong>, and <strong>secure system architecture</strong>.
+        </p>
+        <p style="line-height:1.85;margin-bottom:1rem;">
+          By day, I patrol the perimeters of enterprise networks — monitoring SIEM dashboards, triaging
+          alerts, and conducting threat hunts across endpoints and cloud infrastructure. By night, I
+          hone my blade in CTF arenas and vulnerability research, forging tools and scripts to automate
+          defense and exposure enumeration.
+        </p>
+        <p style="line-height:1.85;">
+          My sworn oath: <em>"No packet unexamined, no log unread, no vulnerability unexploited — in the
+          name of defense."</em>
+        </p>
+      </div>
+
+      <!-- Guild Badges / Certification Shields -->
+      <h3 class="text-center mb-6 animate-on-scroll" style="font-family:'MedievalSharp',cursive;font-size:1.5rem;color:#fef08a;">
+        <i data-lucide="award" style="width:22px;height:22px;display:inline;vertical-align:middle;color:#fde047;"></i>
+        Guild Badges & Crests
+      </h3>
+      <div class="certs-grid animate-on-scroll">
+        <!-- EDIT: YOUR_CERTIFICATIONS — add or remove cert-badges as needed -->
+        <div class="cert-badge">
+          <i data-lucide="shield-check" style="width:16px;height:16px;"></i>
+          <span>CompTIA<br/>Security+</span>
+        </div>
+        <div class="cert-badge">
+          <i data-lucide="bug" style="width:16px;height:16px;"></i>
+          <span>CEH<br/>Certified</span>
+        </div>
+        <div class="cert-badge">
+          <i data-lucide="terminal" style="width:16px;height:16px;"></i>
+          <span>OSCP<br/>Certified</span>
+        </div>
+        <div class="cert-badge">
+          <i data-lucide="lock" style="width:16px;height:16px;"></i>
+          <span>ISC2<br/>CC</span>
+        </div>
+        <div class="cert-badge">
+          <i data-lucide="cloud" style="width:16px;height:16px;"></i>
+          <span>AWS<br/>Security</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SECTION 3 — "The Armory" (Interactive Skills Matrix)
+       ============================================================ -->
+  <section id="skills">
+    <div class="container">
+      <h2 class="section-title animate-on-scroll">The Armory</h2>
+
+      <div class="skill-categories-grid animate-on-scroll stagger-children">
+
+        <!-- ─── Siege Weapons (Offensive) ─── -->
+        <div class="skill-category">
+          <div class="skill-category-header">
+            <span class="icon torch-icon">⚔️</span>
+            <h3>Siege Weapons</h3>
+          </div>
+          <p style="font-size:0.8rem;color:rgba(241,245,249,0.5);margin-bottom:1.25rem;font-family:'JetBrains Mono',monospace;">
+            Offensive Security Tools
+          </p>
+
+          <div class="skill-bar-group">
+            <div class="skill-label">
+              <span>Burp Suite</span>
+              <span>92%</span>
+            </div>
+            <div class="skill-bar">
+              <div class="skill-fill offensive" data-level="92" style="width:0%"></div>
+            </div>
+          </div>
+
+          <div class="skill-bar-group">
+            <div class="skill-label">
+              <span>Nmap / Recon</span>
+              <span>95%</span>
+            </div>
+            <div class="skill-bar">
+              <div class="skill-fill offensive" data-level="95" style="width:0%"></div>
+            </div>
+          </div>
+
+          <div class="skill-bar-group">
+            <div class="skill-label">
+              <span>Metasploit</span>
+              <span>85%</span>
+            </div>
+            <div class="skill-bar">
+              <div class="skill-fill offensive" data-level="85" style="width:0%"></div>
+            </div>
+          </div>
+
+          <div class="skill-bar-group">
+            <div class="skill-label">
+              <span>Wireshark</span>
+              <span>90%</span>
+            </div>
+            <div class="skill-bar">
+              <div class="skill-fill offensive" data-level="90" style="width:0%"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ─── Fortifications & Wards (Defensive) ─── -->
+        <div class="skill-category">
+          <div class="skill-category-header">
+            <span class="icon torch-icon">🛡️</span>
+            <h3>Fortifications & Wards</h3>
+          </div>
+          <p style="font-size:0.8rem;color:rgba(241,245,249,0.5);margin-bottom:1.25rem;font-family:'JetBrains Mono',monospace;">
+            Defensive Security & Monitoring
+          </p>
+
+          <div class="skill-bar-group">
+            <div class="skill-label">
+              <span>SIEM / Splunk</span>
+              <span>93%</span>
+            </div>
+            <div class="skill-bar">
+              <div class="skill-fill defensive" data-level="93" style="width:0%"></div>
+            </div>
+          </div>
+
+          <div class="skill-bar-group">
+            <div class="skill-label">
+              <span>Firewalls / WAF</span>
+              <span>88%</span>
+            </div>
+            <div class="skill-bar">
+              <div class="skill-fill defensive" data-level="88" style="width:0%"></div>
+            </div>
+          </div>
+
+          <div class="skill-bar-group">
+            <div class="skill-label">
+              <span>Snort / Suricata IDS</span>
+              <span>82%</span>
+            </div>
+            <div class="skill-bar">
+              <div class="skill-fill defensive" data-level="82" style="width:0%"></div>
+            </div>
+          </div>
+
+          <div class="skill-bar-group">
+            <div class="skill-label">
+              <span>Linux Hardening</span>
+              <span>90%</span>
+            </div>
+            <div class="skill-bar">
+              <div class="skill-fill defensive" data-level="90" style="width:0%"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ─── Alchemy & Scripts (Languages) ─── -->
+        <div class="skill-category">
+          <div class="skill-category-header">
+            <span class="icon torch-icon">🧪</span>
+            <h3>Alchemy & Scripts</h3>
+          </div>
+          <p style="font-size:0.8rem;color:rgba(241,245,249,0.5);margin-bottom:1.25rem;font-family:'JetBrains Mono',monospace;">
+            Languages & Scripting
+          </p>
+
+          <div class="skill-bar-group">
+            <div class="skill-label">
+              <span>Python</span>
+              <span>94%</span>
+            </div>
+            <div class="skill-bar">
+              <div class="skill-fill alchemy" data-level="94" style="width:0%"></div>
+            </div>
+          </div>
+
+          <div class="skill-bar-group">
+            <div class="skill-label">
+              <span>Bash / Shell</span>
+              <span>90%</span>
+            </div>
+            <div class="skill-bar">
+              <div class="skill-fill alchemy" data-level="90" style="width:0%"></div>
+            </div>
+          </div>
+
+          <div class="skill-bar-group">
+            <div class="skill-label">
+              <span>SQL</span>
+              <span>80%</span>
+            </div>
+            <div class="skill-bar">
+              <div class="skill-fill alchemy" data-level="80" style="width:0%"></div>
+            </div>
+          </div>
+
+          <div class="skill-bar-group">
+            <div class="skill-label">
+              <span>Go / C</span>
+              <span>65%</span>
+            </div>
+            <div class="skill-bar">
+              <div class="skill-fill alchemy" data-level="65" style="width:0%"></div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SECTION 4 — "Chronicles of War" (Projects & CVE Showcase)
+       ============================================================ -->
+  <section id="projects">
+    <div class="container">
+      <h2 class="section-title animate-on-scroll">Chronicles of War</h2>
+
+      <div class="projects-grid">
+
+        <!-- ─── Project 1: SOC Automation ─── -->
+        <div class="project-card animate-on-scroll">
+          <div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:0.5rem;">
+            <i data-lucide="radar" style="width:20px;height:20px;color:#10b981;"></i>
+            <span style="font-family:'Press Start 2P',cursive;font-size:8px;color:#10b981;">CAMPAIGN I</span>
+          </div>
+          <!-- EDIT: YOUR_PROJECT_TITLE -->
+          <h3>Automated Threat Detection Pipeline</h3>
+          <!-- EDIT: YOUR_PROJECT_DESCRIPTION -->
+          <p>
+            A Python-based SOC automation framework that ingests SIEM alerts from Splunk,
+            enriches IOCs with threat intelligence feeds (VirusTotal, AbuseIPDB), maps
+            findings to the MITRE ATT&CK matrix, and auto-generates incident reports.
+            Reduced mean-time-to-triage by 60%.
+          </p>
+          <div class="tags" style="margin-bottom:1rem;">
+            <span class="tag python">Python</span>
+            <span class="tag splunk">Splunk</span>
+            <span class="tag mitre">MITRE ATT&CK</span>
+            <span class="tag" style="background:rgba(253,224,71,0.15);color:#fde047;border:1px solid rgba(253,224,71,0.3);">REST API</span>
+          </div>
+          <div style="display:flex;gap:0.75rem;flex-wrap:wrap;">
+            <!-- EDIT: YOUR_GITHUB_LINK -->
+            <a href="https://github.com" target="_blank" rel="noopener noreferrer" class="btn-secondary" style="padding:0.5rem 1.25rem;font-size:0.9rem;">
+              <i data-lucide="github" style="width:16px;height:16px;"></i> Source Code
+            </a>
+            <!-- EDIT: YOUR_DEMO_LINK -->
+            <a href="#" class="btn-primary" style="padding:0.5rem 1.25rem;font-size:0.9rem;">
+              <i data-lucide="play" style="width:16px;height:16px;"></i> Live Demo
+            </a>
+          </div>
+        </div>
+
+        <!-- ─── Project 2: Network Vuln Lab ─── -->
+        <div class="project-card animate-on-scroll">
+          <div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:0.5rem;">
+            <i data-lucide="network" style="width:20px;height:20px;color:#06b6d4;"></i>
+            <span style="font-family:'Press Start 2P',cursive;font-size:8px;color:#06b6d4;">CAMPAIGN II</span>
+          </div>
+          <!-- EDIT: YOUR_PROJECT_TITLE -->
+          <h3>Active Directory Attack & Defense Lab</h3>
+          <!-- EDIT: YOUR_PROJECT_DESCRIPTION -->
+          <p>
+            A fully virtualized Active Directory environment built with Vagrant/VirtualBox
+            simulating real-world attack chains: Kerberoasting, Pass-the-Hash, DCSync, and
+            Golden Ticket attacks — paired with detection rules for Splunk and Sigma.
+            Complete with attack playbook documentation.
+          </p>
+          <div class="tags" style="margin-bottom:1rem;">
+            <span class="tag python">PowerShell</span>
+            <span class="tag splunk">Splunk</span>
+            <span class="tag mitre">Active Directory</span>
+            <span class="tag" style="background:rgba(253,224,71,0.15);color:#fde047;border:1px solid rgba(253,224,71,0.3);">Vagrant</span>
+          </div>
+          <div style="display:flex;gap:0.75rem;flex-wrap:wrap;">
+            <!-- EDIT: YOUR_GITHUB_LINK -->
+            <a href="https://github.com" target="_blank" rel="noopener noreferrer" class="btn-secondary" style="padding:0.5rem 1.25rem;font-size:0.9rem;">
+              <i data-lucide="github" style="width:16px;height:16px;"></i> Source Code
+            </a>
+          </div>
+        </div>
+
+        <!-- ─── Project 3: CVE / Vulnerability Disclosure ─── -->
+        <div class="project-card animate-on-scroll" style="grid-column: 1 / -1;">
+          <div class="cve-scroll" style="position:relative;">
+            <!-- Wax Seal Badge -->
+            <div class="wax-seal" aria-label="CVE Wax Seal">CVE</div>
+
+            <div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:0.75rem;">
+              <i data-lucide="file-warning" style="width:20px;height:20px;color:#991b1b;"></i>
+              <span style="font-family:'Press Start 2P',cursive;font-size:8px;color:#991b1b;">ROYAL BOUNTY SCROLL</span>
+            </div>
+
+            <h3 style="font-family:'MedievalSharp',cursive;font-size:1.5rem;color:#991b1b;margin-bottom:0.5rem;">
+              Vulnerability Disclosure
+            </h3>
+
+            <!-- EDIT: YOUR_CVE_ID -->
+            <div style="display:flex;align-items:center;gap:1rem;flex-wrap:wrap;margin-bottom:1rem;">
+              <span style="font-family:'Press Start 2P',cursive;font-size:11px;color:#991b1b;background:rgba(153,27,27,0.15);padding:0.4rem 0.75rem;border-radius:4px;border:1px solid rgba(153,27,27,0.3);">
+                CVE-202X-XXXXX
+              </span>
+              <!-- EDIT: YOUR_CVSS_SCORE -->
+              <span style="font-family:'JetBrains Mono',monospace;font-size:0.85rem;color:#1e293b;">
+                CVSS: <strong style="color:#dc2626;">8.8 HIGH</strong>
+              </span>
+            </div>
+
+            <!-- CVSS Gauge -->
+            <div class="cvss-gauge" style="max-width:300px;">
+              <!-- EDIT: width% should match CVSS/10 * 100 -->
+              <div class="cvss-gauge-fill cvss-high" style="width:88%;"></div>
+            </div>
+
+            <!-- EDIT: YOUR_CVE_DETAILS -->
+            <p style="margin-top:1rem;line-height:1.75;color:#334155;">
+              <strong>Affected Software:</strong> [Protocol/Software Name v1.x – v2.x]<br/>
+              <strong>Type:</strong> Remote Code Execution via Deserialization Flaw<br/>
+              <strong>Impact:</strong> Unauthenticated attacker can achieve full system compromise on affected hosts.
+            </p>
+
+            <!-- Accordion for full writeup -->
+            <div style="margin-top:1.5rem;">
+              <div class="accordion">
+                <div class="accordion-header" style="background:rgba(153,27,27,0.08);color:#991b1b;">
+                  <span>
+                    <i data-lucide="scroll" style="width:16px;height:16px;display:inline;vertical-align:middle;"></i>
+                    Read Incident Report / Vulnerability Disclosure
+                  </span>
+                  <span class="chevron">▼</span>
+                </div>
+                <div class="accordion-content" style="background:rgba(254,249,195,0.5);">
+                  <div class="accordion-content-inner" style="color:#334155;">
+                    <!-- EDIT: YOUR_CVE_WRITEUP -->
+                    <h4 style="font-family:'MedievalSharp',cursive;font-size:1.15rem;margin-bottom:0.75rem;color:#991b1b;">
+                      Vulnerability Summary
+                    </h4>
+                    <p style="margin-bottom:1rem;">
+                      During routine assessment of [Software Name], a critical deserialization vulnerability
+                      was discovered in the authentication handler. The flaw allows an unauthenticated remote
+                      attacker to craft a malicious serialized object, bypass input validation, and achieve
+                      arbitrary code execution with the privileges of the application service account.
+                    </p>
+
+                    <h4 style="font-family:'MedievalSharp',cursive;font-size:1.15rem;margin-bottom:0.75rem;color:#991b1b;">
+                      Technical Details
+                    </h4>
+                    <p style="margin-bottom:0.5rem;">
+                      The vulnerable endpoint <code style="background:rgba(15,23,42,0.1);padding:2px 6px;border-radius:3px;">/api/auth/session</code>
+                      accepts user-controlled serialized data without proper type checking. By injecting a
+                      crafted payload, an attacker can trigger an object instantiation chain leading to OS
+                      command execution.
+                    </p>
+                    <pre style="background:#0f172a;color:#10b981;padding:1rem;border-radius:6px;overflow-x:auto;font-size:0.8rem;margin:1rem 0;"><code>POST /api/auth/session HTTP/1.1
+Host: target.example.com
+Content-Type: application/x-serialized
+
+O:14:"PayloadObject":1:{s:4:"exec";s:17:"id; cat /etc/shadow";}</code></pre>
+
+                    <h4 style="font-family:'MedievalSharp',cursive;font-size:1.15rem;margin-bottom:0.75rem;color:#991b1b;">
+                      Mitigation
+                    </h4>
+                    <ul style="padding-left:1.25rem;list-style:disc;">
+                      <li>Upgrade to [Software Name] v2.1+ which patches the deserialization handler</li>
+                      <li>Implement input validation and allowlist-based deserialization</li>
+                      <li>Deploy WAF rules to detect serialized object injection patterns</li>
+                      <li>Monitor for exploitation using Sigma rule <code style="background:rgba(15,23,42,0.1);padding:2px 6px;border-radius:3px;">proc_creation_win_susp_serialization</code></li>
+                    </ul>
+
+                    <h4 style="font-family:'MedievalSharp',cursive;font-size:1.15rem;margin:1rem 0 0.75rem;color:#991b1b;">
+                      Timeline
+                    </h4>
+                    <ul style="padding-left:1.25rem;list-style:disc;">
+                      <li><strong>Discovery:</strong> 202X-01-15</li>
+                      <li><strong>Vendor Notified:</strong> 202X-01-18</li>
+                      <li><strong>Patch Released:</strong> 202X-03-02</li>
+                      <li><strong>Public Disclosure:</strong> 202X-04-01</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SECTION 5 — "Raven Post" (Contact & Socials)
+       ============================================================ -->
+  <section id="contact">
+    <div class="container" style="max-width:700px;">
+      <h2 class="section-title animate-on-scroll">Raven Post</h2>
+
+      <p class="animate-on-scroll" style="text-align:center;color:rgba(241,245,249,0.6);margin-bottom:2rem;font-size:0.95rem;">
+        Send a raven with your missive. All messages are sealed and delivered with utmost discretion.
+      </p>
+
+      <!-- Contact Form -->
+      <form class="raven-form animate-on-scroll" id="contact-form" novalidate>
+        <label for="contact-name">
+          <i data-lucide="user" style="width:16px;height:16px;display:inline;vertical-align:middle;"></i>
+          Emissary Name
+        </label>
+        <input type="text" id="contact-name" name="name" placeholder="Sir Lancelot of the Firewall" required autocomplete="name" />
+
+        <label for="contact-email">
+          <i data-lucide="mail" style="width:16px;height:16px;display:inline;vertical-align:middle;"></i>
+          Scroll Address (Email)
+        </label>
+        <input type="email" id="contact-email" name="email" placeholder="lancelot@kingdom.sec" required autocomplete="email" />
+
+        <label for="contact-message">
+          <i data-lucide="feather" style="width:16px;height:16px;display:inline;vertical-align:middle;"></i>
+          Your Missive
+        </label>
+        <textarea id="contact-message" name="message" placeholder="Speak, friend, and enter..." required></textarea>
+
+        <button type="submit" class="btn-primary" style="width:100%;">
+          <i data-lucide="send" style="width:18px;height:18px;"></i>
+          Dispatch Raven
+        </button>
+      </form>
+
+      <!-- Social Links -->
+      <div class="animate-on-scroll" style="text-align:center;margin-top:3rem;">
+        <h3 style="font-family:'MedievalSharp',cursive;font-size:1.3rem;color:#fde047;margin-bottom:1rem;">
+          Allied Outposts
+        </h3>
+        <div class="social-links" style="justify-content:center;">
+          <!-- EDIT: YOUR_GITHUB_URL -->
+          <a href="https://github.com" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+            <i data-lucide="github" style="width:20px;height:20px;"></i>
+          </a>
+          <!-- EDIT: YOUR_LINKEDIN_URL -->
+          <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+            <i data-lucide="linkedin" style="width:20px;height:20px;"></i>
+          </a>
+          <!-- EDIT: YOUR_TRYHACKME_URL -->
+          <a href="https://tryhackme.com" target="_blank" rel="noopener noreferrer" aria-label="TryHackMe">
+            <i data-lucide="swords" style="width:20px;height:20px;"></i>
+          </a>
+          <!-- EDIT: YOUR_HACKTHEBOX_URL -->
+          <a href="https://hackthebox.com" target="_blank" rel="noopener noreferrer" aria-label="HackTheBox">
+            <i data-lucide="box" style="width:20px;height:20px;"></i>
+          </a>
+          <!-- EDIT: YOUR_PGP_KEY_URL -->
+          <a href="#" aria-label="Download PGP Public Key" title="PGP Public Key">
+            <i data-lucide="key-round" style="width:20px;height:20px;"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       FOOTER
+       ============================================================ -->
+  <footer class="castle-footer">
+    <!-- EDIT: YOUR_NAME and YOUR_GITHUB_REPO -->
+    <p class="forged-by">
+      ⚒️ Forged by <a href="https://github.com" target="_blank" rel="noopener noreferrer" style="color:#fde047;text-decoration:underline;text-underline-offset:3px;">Your Name</a> in Year 2026
+    </p>
+    <p class="footer-text">Protected under the Sovereign Cipher. All rights guarded by the realm.</p>
+    <p class="footer-text" style="margin-top:0.5rem;">
+      <a href="https://github.com" target="_blank" rel="noopener noreferrer" style="color:rgba(253,224,71,0.5);">
+        <i data-lucide="github" style="width:14px;height:14px;display:inline;vertical-align:middle;"></i>
+        View Source on GitHub
+      </a>
+    </p>
+  </footer>
+
+  <!-- ============================================================
+       EXTERNAL SCRIPTS (CDN)
+       ============================================================ -->
+  <!-- GSAP + ScrollTrigger -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <!-- Portfolio Script -->
+  <script src="script.js"></script>
+
+</body>
+</html>
